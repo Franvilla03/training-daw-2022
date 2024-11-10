@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var x = 10
 var test = 5
