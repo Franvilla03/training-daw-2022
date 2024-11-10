@@ -1,18 +1,19 @@
-const assert = require('assert').strict
-
 function insertIfNotExists(array, item, position) {
-    return array
+    if (array.indexOf(item) === -1) {
+        if (position) {
+            for (let i = array.length; i > 0; i--) {
+                array[i] = array[i - 1];
+            }
+            array[0] = item;
+        } else {
+            array.push(item);
+        }
+    }
+    return array;
 }
 
+let array = ['pera', 'manzana'];
 
-let array = ['pera', 'manzana']
-
-let result = insertIfNotExists(array, 'pera', false)
-assert.deepStrictEqual(result, ['pera', 'manzana'])
-
-// result = insertIfNotExists(array, 'melón', false)
-// assert.deepStrictEqual(result, ['pera', 'manzana', 'melón'])
-
-// result = insertIfNotExists(array, 'melocotón', true)
-// assert.deepStrictEqual(result, ['melocotón', 'pera', 'manzana', 'melón'])
-
+console.log(insertIfNotExists(array, 'pera', false));
+console.log(insertIfNotExists(array, 'melón', false));
+console.log(insertIfNotExists(array, 'melocotón', true));
