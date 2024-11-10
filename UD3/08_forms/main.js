@@ -1,15 +1,49 @@
-window.onload = function() {
-    console.log(document.main_form.elements)
+document.addEventListener("DOMContentLoaded", function () {
+    const nombre = document.getElementById("nombre");
+    const apellidos = document.getElementById("apellidos");
+    const activarSi = document.getElementById("activarSi");
+    const activarNo = document.getElementById("activarNo");
+    const check2 = document.getElementById("check2");
+    const combo = document.getElementById("combo");
+    const enviar = document.getElementById("enviar");
+    const mensajeError = document.getElementById("mensajeError");
+    const descripcion = document.getElementById("descripcion");
+    const contador = document.getElementById("contador");
 
-    console.log(document.getElementById('pregunta_si').value)
-    console.log(document.getElementById('pregunta_si').checked)
+    function validarBotonEnviar() {
+        enviar.disabled = !(activarSi.checked && check2.checked);
+    }
 
-    document.getElementById('pregunta_si').onchange = changeValue
-    document.getElementById('pregunta_no').onchange = changeValue
+    activarSi.addEventListener("change", function () {
+        combo.disabled = !activarSi.checked;
+        validarBotonEnviar();
+    });
 
-    
-}
+    activarNo.addEventListener("change", function () {
+        if (activarNo.checked) {
+            combo.disabled = true;
+        }
+        validarBotonEnviar();
+    });
 
-function changeValue(e) {
-     console.log('changed' + e.target.value)
-}
+    check2.addEventListener("change", validarBotonEnviar);
+
+    descripcion.addEventListener("input", function () {
+        contador.textContent = `${descripcion.value.length}/80`;
+    });
+
+    document.getElementById("miFormulario").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (nombre.value.trim() === "" || apellidos.value.trim() === "") {
+            mensajeError.textContent = "Nombre y apellidos son obligatorios.";
+            return;
+        }
+
+        mensajeError.textContent = "";
+
+        enviar.disabled = true;
+
+        console.log("Formulario enviado correctamente.");
+    });
+});
